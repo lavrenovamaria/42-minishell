@@ -32,3 +32,10 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 | **execve**| Changes the process that called the execve function to a new process.| `int execve(const char *path, char *const argv[], char *const envp[])`   | `#include <unistd.h>`  |
 | **fork**| Creates a copy process for the currently running process.| `pid_t fork(void)`   | `#include <unistd.h>`  |
 | **strerror**| Creates a copy process for the currently running process.| `char *strerror(int errnum)`   | `#include <string.h>`  |
+| **errno**| Returns: the last error number that occurred| `extern int errno`   | `#include <sys/errno.h>`  |
+| **exit**| Terminate the process.| `void exit(int status)`   | `#include <stdlib.h>`  |
+| **opendir**| Specified Directory Used to search for files and directories in a specific directory.| `DIR *opendir(const char *filename)`   | `#include <dirent.h>`  |
+| **readdir**| opendir(). For a directory opened by, get information about all files and directories in it.| `struct dirent *readdir(DIR *dirp)`   | `#include <dirent.h>`  |
+| **closedir**| opendir(). Close the directory opened with.| `int closedir(DIR *dirp)`   | `#include <dirent.h>`  |
+| **isatty**| `fd` Determining whether a valid terminal type device is referenced for| `int isatty(int fd)`   | `#include <unistd.h>`  |
+| **ttyname**| isatty. If the function finds a valid device, it returns the device name.| `char *ttyname(int fd)`   | `#include <unistd.h>`  |
