@@ -4,3 +4,4 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 | External functs.    | Description | Form | Header |
 | --- | ----------------------- | ---------- | ---------- |
 | **readline**| Prints a prompt, receives a single line of text input from the user, and returns it. readline() return value is malloc()assigned by. | `char *readline (char *prompt)`   | `#include <readline/readline.h>`  |
+| **rl_on_new_line**| Tell the update functions that we have moved onto a new (empty) line, usually after outputting a newline. | `int rl_on_new_line (void)`   | `#include <readline/readline.h>`  |
