@@ -53,5 +53,5 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 
 
 ## ctrl+c
-*`INT` signal (SIGINT).
+* `INT` signal (SIGINT).
 * Basically, it is responsible for terminating the process.
