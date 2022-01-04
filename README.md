@@ -68,3 +68,36 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 * `INFO` signal (SIGINFO).
 * If supported by the command, by default the operating system displays information about the command being executed.
 * It is not supported by all types of Unix.
+
+## SIGHUP
+* Occurs when the connection with the terminal is lost.
+* By default, the process is terminated.
+* Portable Number: 1.
+
+## SIGINT
+* Occurs when an interrupt occurs.
+* By default, the process is terminated.
+* Portable Number: 2.
+* Interrupt signal input from keyboard (ctrl_c)
+
+## SIGQUIT
+* Terminal exit signal.
+* It exits with a core dump
+* Portable Number: 3.
+* Execution stop signal input from keyboard (ctrl+\)
+
+## SIGKILL
+* Terminate the process unconditionally.
+* It cannot be ignored and cannot be controlled.
+* Portable Number: 9.
+
+## SIGSEGV
+* Occurs when a process references the wrong memory.
+* It exits with a core dump.
+* Portable Number: 11.
+
+## SIGSTOP
+* Process interruption.
+* It is not terminated and has no control.
+* Portable Number: 17.
+* A signal (ctrl+z) that waits to resume execution after stopping execution.
