@@ -55,3 +55,16 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 ## ctrl+c
 * `INT` signal (SIGINT).
 * Basically, it is responsible for terminating the process.
+
+## ctrl+z
+* `TSTP` signal (SIGTSTP).
+* Basically, it is responsible for terminating the process.
+
+## ctrl+\
+* `QUIT` signal (SIGQUIT).
+* Basically, it serves to dump the core after terminating the process.
+
+## ctrl+t
+* `INFO` signal (SIGINFO).
+* If supported by the command, by default the operating system displays information about the command being executed.
+* It is not supported by all types of Unix.
