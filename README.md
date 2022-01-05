@@ -57,7 +57,7 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 * Basically, it is responsible for terminating the process.
 
 ## ctrl+z
-* `TSTP` signal (SIGTSTOP).
+* `TSTP` signal (SIGSTOP).
 * Basically, it is responsible for terminating the process.
 
 ## ctrl+\
