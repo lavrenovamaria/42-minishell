@@ -72,32 +72,32 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 ## SIGHUP
 * Occurs when the connection with the terminal is lost.
 * By default, the process is terminated.
-* Portable Number: 1.
+* Unix signal: 1.
 
 ## SIGINT
 * Occurs when an interrupt occurs.
 * By default, the process is terminated.
-* Portable Number: 2.
+* Unix signal: 2.
 * Interrupt signal input from keyboard (ctrl_c)
 
 ## SIGQUIT
 * Terminal exit signal.
 * It exits with a core dump
-* Portable Number: 3.
+* Unix signal: 3.
 * Execution stop signal input from keyboard (ctrl+\)
 
 ## SIGKILL
 * Terminate the process unconditionally.
 * It cannot be ignored and cannot be controlled.
-* Portable Number: 9.
+* Unix signal: 9.
 
 ## SIGSEGV
 * Occurs when a process references the wrong memory.
 * It exits with a core dump.
-* Portable Number: 11.
+* Unix signal: 11.
 
 ## SIGSTOP
 * Process interruption.
 * It is not terminated and has no control.
-* Unix signal №17.
+* Unix signal: 17.
 * A signal (ctrl+z) that waits to resume execution after stopping execution.
