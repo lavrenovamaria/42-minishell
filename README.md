@@ -99,5 +99,5 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 ## SIGSTOP
 * Process interruption.
 * It is not terminated and has no control.
-* Portable Number: 17.
+* Unix signal №17.
 * A signal (ctrl+z) that waits to resume execution after stopping execution.
