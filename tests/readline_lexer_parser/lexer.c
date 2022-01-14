@@ -15,25 +15,21 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int	ft_isspace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '	')
+		return (1);
+	return (0);
+}
+
 void printList(t_list *n)
 {
-	//n = n->next;
 	while (n != NULL)
 	{
 		printf("%s ", n->content);
 		n = n->next;
 	}
 }
-
-// void push(t_list *head, int val)
-// {
-// 	t_list *current = head;
-// 	while (current->next != NULL)
-// 		current = current->next;
-// 	current->next = malloc(sizeof(t_list));
-// 	current->next->content = val;
-// 	current->next->next = NULL;
-// }
 
 t_list	*ft_lstnew(void *content)
 {
@@ -79,45 +75,14 @@ void sig_handler(int signal)
 	if (rl_on_new_line() == -1) // печать строки из readline
 	    exit(1);
 	rl_replace_line("", 1); // вывод строки, которую мы ввели в командной строку
-	rl_redisplay();         // меняет
+	rl_redisplay();         // меняет то, что последнее было выведено
 }
 
 void setting_signal()
 {
-    signal(SIGINT, sig_handler); // CTRL + C
-    signal(SIGQUIT, SIG_IGN);    // CTRL + /
-                                 // signal(SIGTERM, sig_handler);
+	signal(SIGINT, sig_handler); // CTRL + C
+	signal(SIGQUIT, SIG_IGN);    // CTRL + /
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	char *str;
-// 	struct termios term;
-
-// 	setting_signal();
-// 	while (1)
-// 	{
-// 		str = readline("bash-3.2$ ");
-// 		if (!str)
-// 		{
-// 			printf("\033[1A");
-// 			printf("\033[10C");
-// 			printf(" exit\n");
-// 			exit(-1);
-// 		}
-// 		else if (*str == '\0')
-// 		{
-// 			free(str);
-// 		}
-// 		else
-// 		{
-// 			add_history(str);
-// 			printf("%s\n", str);
-// 			free(str);
-// 		}
-// 	}
-// 	return (0);
-// }
 
 int main(int argc, char **argv, char **envp)
 {
@@ -144,10 +109,22 @@ int main(int argc, char **argv, char **envp)
 		}
 		else
 		{
-			add_history(str);
+			while (ft_isspace(*str))
+				str++;
+			// while(*str)
+			// {
+			// 	if(*str == 34 || *str == 39)
+			// 		str = ft_quotes(str);
+			// 	else if(*str == '|' || *str == '&' || *str == '<' || *str == '>')
+			// 		str = ft_pipes(str);
+			// 	else if (*str == '(' || *str == ')')
+			// 		str = ft_parentheses(str);
+			// 	else
+			// 		str = ft_args(str);
+			// }
+			add_history(str);//dima ya hz chto eto
 			ft_lstadd_back(&head, ft_lstnew(str));
 			printf("%s\n", str);
-			free(str);
 		}
 	}
 	return (0);

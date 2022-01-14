@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "libft/libft/libft.h"
+//#include "libft/libft/libft.h"
 
 # define FLAG_PIPE_OUT		0b000001
 # define FLAG_STDOUT		0b000010
