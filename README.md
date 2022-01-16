@@ -101,3 +101,16 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 * It is not terminated and has no control.
 * Unix signal: 17.
 * A signal (ctrl+z) that waits to resume execution after stopping execution.
+
+
+## READLINE
+readline — это библиотека GNU для чтения пользовательского ввода. Он поддерживает все виды возможностей редактирования строки, которые пользователь может использовать для редактирования строки ввода. Например, пользователь может перемещать курсор в разные позиции в строке и изменять части входной строки.
+Флаг для компиляции -lreadline
+Команды для изменения строки при вводе:
+* CNTRL-a   move curser to begining of input string
+* CNTRL-e   move curser to end of input string
+* CNTRL-b   move curser back one character
+* CNTRL-f   move curser forward one character
+* CNTRL-d   delete the character under the curser
+* CNTRL-k   kill the string from the curser to the end of the line
+    CNTRL-l   clear the screen and re-print the prompt and input string at the top
