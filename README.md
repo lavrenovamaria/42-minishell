@@ -116,9 +116,9 @@ readline — это библиотека GNU для чтения пользов�
 * CNTRL-l   clear the screen and re-print the prompt and input string at the top
 
 ## READLINE
-* tcgetattr --int tcgetattr(int fd, struct termios *t)--
+* tcgetattr `int tcgetattr(int fd, struct termios *t)`
 В качестве аргумента получает файловый дескриптор объекта, с которым нужно работать. Поскольку значение атрибута записывается с помощью указателя, возвращаемое значение указывает на результат выполнения функции tcgetattr. Если выполнение функции успешно завершено, возвращается 0, иначе возвращается -1.
-* tcsetattr --int tcsetattr(int fd, int action, const struct termios *t)--
+* tcsetattr `int tcsetattr(int fd, int action, const struct termios *t)`
 ![image](https://user-images.githubusercontent.com/84707645/149665882-35ece4ff-03cf-40a3-a75f-36e105b64abc.png)\
 Существует 4 типа значений, которые можно использовать в качестве действия, как показано на рисунке выше. int tcsetattr(int fd, int actions, const struct termios *termios_p);
 
