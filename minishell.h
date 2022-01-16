@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-//#include "libft/libft/libft.h"
+#include "libft/libft/libft.h"
 
 # define FLAG_PIPE_OUT		0b000001
 # define FLAG_STDOUT		0b000010
@@ -24,6 +24,22 @@ typedef struct		s_arguments
 	int pipes_count;
 	int commands_count;
 } t_arguments;
+
+
+typedef struct			s_tree
+{
+	void			*content;
+	struct s_tree	*right;
+	struct s_tree	*left;
+	int				height;
+}						t_tree;
+
+t_tree	*create_node(void *content);
+void	free_tree(t_tree *root);
+t_tree	*rotateright(t_tree *root);
+t_tree	*rotateleft(t_tree *root);
+void	insert_right(t_tree* root, t_tree *node);
+void	insert_left(t_tree* root, t_tree *node);
 
 // Service
 t_list	*ft_lstindex(t_list *lst, int index);

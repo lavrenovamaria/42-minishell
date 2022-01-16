@@ -1,24 +1,10 @@
 #include "minishell.h"
 
-int main()
+int execute(t_list *commands)
 {
 	t_arguments args;
 	args.pipes_count = 1;
 	args.commands_count = 2;
-
-
-	void *command1 = malloc(sizeof(t_command));
-	((t_command *)command1)->command = "ls";
-	((t_command *)command1)->args = NULL;
-	((t_command *)command1)->flags |= FLAG_PIPE_OUT;
-
-	void *command2 = malloc(sizeof(t_command));
-	((t_command *)command2)->command = "ls";
-	((t_command *)command2)->args = NULL;
-	((t_command *)command2)->flags |= FLAG_PIPE_IN;
-
-	t_list *commands = ft_lstnew(command1);
-	ft_lstadd_back(&commands, ft_lstnew(command2));
 
 
 	int fd[args.pipes_count][2];
@@ -42,7 +28,7 @@ int main()
 		if (pid == 0)
 		{
 			// Child
-			command = (t_command *)ft_lstindex(commands, count)->content;
+			command = (t_command *)ft_lstindex(commands, count_commands)->content;
 			if (command)
 			{
 				if (command->flags & FLAG_PIPE_IN)
@@ -71,5 +57,26 @@ int main()
 
 	wait(0);
 	wait(0);
+	return 0;
+}
+
+int main()
+{
+	void *command1 = malloc(sizeof(t_command));
+	((t_command *)command1)->command = "ls";
+	((t_command *)command1)->args = NULL;
+	((t_command *)command1)->flags = 0;
+	((t_command *)command1)->flags |= FLAG_PIPE_OUT;
+
+	void *command2 = malloc(sizeof(t_command));
+	((t_command *)command2)->command = "ls";
+	((t_command *)command2)->args = NULL;
+	((t_command *)command2)->flags = 0;
+	((t_command *)command2)->flags |= FLAG_PIPE_IN;
+
+	t_list *commands = ft_lstnew(command1);
+	ft_lstadd_back(&commands, ft_lstnew(command2));
+
+	execute(commands);
 	return 0;
 }

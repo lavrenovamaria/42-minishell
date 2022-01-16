@@ -124,7 +124,7 @@ int main(int argc, char **argv, char **envp)
 			// }
 			add_history(str);//dima ya hz chto eto
 			ft_lstadd_back(&head, ft_lstnew(str));
-			printf("%s\n", str);
+			parser(ft_split(str, ' '));
 		}
 	}
 	return (0);
