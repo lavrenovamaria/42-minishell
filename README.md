@@ -427,3 +427,44 @@ int	main(void)
 ```
 ![Screenshot from 2022-01-18 18-19-53](https://user-images.githubusercontent.com/84707645/149966290-58c3ae77-59f8-4010-906d-f2065012e487.png)
 
+#### * isatty `int  isatty (int fd) `
+Сообщает, [подключен ли](https://www.ibm.com/docs/en/zos/2.2.0?topic=functions-isatty-test-if-descriptor-represents-terminal) дескриптор файла к терминалу или нет. Параметр является индексом в таблице дескрипторов файлов стандартной библиотеки ввода-вывода. Индексы 0, 1 и 2 зарезервированы для stdin , stdout и stderr . Все остальные индексы относятся к дескрипторам файлов, которые могут/были открыты вами.
+```
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
+
+void	censor(int fd, const char *s)
+{
+	if (isatty(fd))
+	{
+		if (s)
+			printf("%s is referring to a terminal\n", s);
+		else
+			printf("File Descriptor %d is referring to a terminal\n", fd);
+	}
+	else
+	{
+		if (s)
+			printf("%s is not referring to a terminal\n", s);
+		else
+			printf("File Descriptor %d is not referring to a terminal\n", fd);
+	}
+}
+
+int	main(void)
+{
+	int	fd;
+
+	fd = open("test", O_RDONLY);
+	if (fd < 0)
+		return (1);
+	censor(STDIN_FILENO, "STDIN");
+	censor(STDOUT_FILENO, "STDOUT");
+	censor(STDERR_FILENO, "STDERR");
+	censor(fd, NULL);
+	censor(1, NULL);
+	close(fd);
+	return (0);
+}
+```
