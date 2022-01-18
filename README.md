@@ -354,3 +354,6 @@ int	main(void)
 }
 ```
 ![Screenshot from 2022-01-18 17-39-21](https://user-images.githubusercontent.com/84707645/149958388-0caf679f-c5d2-4849-881a-cedbcc872157.png)
+А если уменьшить окно VsCode, то
+![Screenshot from 2022-01-18 17-41-39](https://user-images.githubusercontent.com/84707645/149958725-fd0d4005-eee0-494a-9701-7ec75936b8ee.png)
+
