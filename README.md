@@ -394,3 +394,34 @@ int	main(void)
 }
 ```
 ![Screenshot from 2022-01-18 18-01-36](https://user-images.githubusercontent.com/84707645/149962346-f12e4102-4122-40cd-9ac6-fcb72df168f8.png)
+
+#### * chdir `int chdir(const char *path)`
+
+Функция изменяет текущий рабочий каталог вызывающего процесса в каталог, указанный в пути. Если изменение пути прошло успешно, возвращается 0, а при возникновении ошибки возвращается -1.
+
+```
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int	main(void)
+{
+	char	*path;
+
+	path = getcwd(NULL, 0);
+	if (!path)
+		return (1);
+	printf("Before:\t%s\n", path);
+	free(path);
+	path = NULL;
+	if (chdir("../") == -1)
+		return (1);
+	path = getcwd(NULL, 0);
+	if (!path)
+		return (1);
+	printf("After:\t%s\n", path);
+	free(path);
+	path = NULL;
+	return (0) ; 
+}
+```
