@@ -576,4 +576,4 @@ int	main(void)
 
 #### * signal `typedef void (*sighandler_t)(int)`
 `sighandler_t signal(int signum, sighandler_t handler)`
-[Какая-то боль](https://ru.wikipedia.org/wiki %D0%A1%D0%B8%D0%B3%D0%BD%D0%B0%D0%BB_(Unix))
+[Какая-то боль](https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D0%B3%D0%BD%D0%B0%D0%BB_(Unix))
