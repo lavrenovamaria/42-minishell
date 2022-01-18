@@ -142,7 +142,7 @@ int main(void)
 	while (read(0, &c, sizeof(c)) > 0)
 	{
 		printf("keycode: %d\n", c);
-       		c = 0; // flush buffer
+       		c = 0; // очистка буфера
 	}
 }
 ```
