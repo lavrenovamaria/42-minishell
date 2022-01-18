@@ -619,5 +619,3 @@ int	main(void)
 }
 ```
 ![Screenshot from 2022-01-18 18-52-33](https://user-images.githubusercontent.com/84707645/149971462-50e8cde1-257d-44a8-80f1-a29bd0c3aff7.png)
-
-#### * signal `typedef void (*sighandler_t)(int)`
