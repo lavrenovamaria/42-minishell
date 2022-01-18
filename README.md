@@ -156,7 +156,7 @@ read() считает sizeof(int), чтобы получить value(?) клав
 #### * tgetent `int tgetent(char *bp, const char *name)`
 Tgetent пoмeщaeт в бyфep bp инфopмaцию o тepминaлe соответствующую имени. Как правило, значение, присвоенное имени, использует тип терминала, назначенный в качестве переменной среды TERM. В этом случае обычно присваивается значение NULL, поскольку указатель буфера, называемый bp, является игнорируемым аргументом. Bp дoлжeн yкaзывaть нa мaccив cимвoлoв paзмepoм 1024 бaйтa и дoлжeн coxpaнятьcя в пpoцecce вызoвoв tgetnum, tgetflag и tgetstr. Tgetent вoзвpaщaeт -1 в cлyчae, ecли пpoизoшлa oшибкa пpи oткpытии фaйлa termcap, вoзвpaщaeт 0, ecли нeт oпиcaния дaннoгo тepминaлa, и вoзвpaщaeт 1, ecли вce нopмaльнo.
 
-* Переменная окружения TERM содержит идентификатор возможностей текстового окна. Вы можете получить подробный список этих возможностей, используя команду «infocmp», используя «man 5 terminfo» в качестве референса.
+* Переменная окружения TERM содержит [идентификатор возможностей текстового окна](https://brlcad.org/docs/doxygen-r64112/dd/dfa/cursor_8c.xhtml). Вы можете получить подробный список этих возможностей, используя команду «infocmp», используя «man 5 terminfo» в качестве референса.
 При создании текста со встроенными цветовыми директивами msgcat просматривает переменную TERM. Текстовые окна сегодня обычно поддерживают не менее 8 цветов. Однако часто текстовое окно поддерживает 16 или более цветов, даже если для переменной TERM задан идентификатор, обозначающий только 8 поддерживаемых цветов. В этих случаях может быть целесообразно установить для переменной TERM другое значение:\
 `xterm`\
 xterm в большинстве случаев построен с поддержкой 16 цветов. Он также может быть построен с поддержкой 88 или 256 цветов (но не обоих). В большинстве случаев (в среде macOS) по умолчанию используется xterm, и, поскольку будет использоваться конфигурация xterm, можно установить env = "xterm".
@@ -167,6 +167,149 @@ if (env == NULL)
 tgetent(NULL, env);					// использование настроек xterm
 char *cm = tgetstr("cm", NULL);		// для движения курсора(cursor motion)
 char *ce = tgetstr("ce", NULL);		// для стирания от текущей позиции курсора до конца строки(cursor erase)
+```
+### Переместить курсор в указанную позицию
+В библиотеке `termcap` вы можете получать команды, необходимые для выполнения действия, с помощью функции tputs() и функции tgoto(). Переместить курсор в позицию (5, 5) можно следующим образом:
+```
+int putchar_tc(int tc)
+{
+	write(1, &tc, 1);
+	return (0);
+}
+
+int main(void)
+{
+	tgetent(NULL, "xterm");
+	char *cm = tgetstr("cm", NULL);
+	tputs(tgoto(cm, 5, 5), 1, putchar_tc);
+}
+```
+Через tgoto(cm, 5, 5) команда на перемещение в позицию (5, 5) (cm — движение курсора) передается на tputs и выполняется. Верхний левый угол окна терминала (0, 0).
+В случае ce - команда очистки строки от курсора, вы можете использовать ее в виде tputs(ce, 1, putchar_tc) без tgoto.
+
+### Принимать ввод с клавиатуры и перемещать курсор
+```
+#include <termios.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <termcap.h>
+
+# define BACKSPACE 127
+# define LEFT_ARROW 4479771
+# define RIGHT_ARROW 4414235
+
+int	nbr_length(int n)
+{
+	int	i = 0;
+
+	if (n <= 0)
+		i++;
+	while (n != 0)
+	{
+		n /= 10;
+		i++;
+	}
+	return (i);
+}
+
+void	get_cursor_position(int *col, int *rows)
+{
+	int		a = 0;
+	int		i = 1;
+	char	buf[255];
+	int		ret;
+	int		temp;
+
+	write(0, "\033[6n", 4);  //report cursor location
+	ret = read(0, buf, 254);
+	buf[ret] = '\0';
+	while (buf[i])
+	{
+		if (buf[i] >= '0' && buf[i] <= '9')
+		{
+			if (a == 0)
+				*rows = atoi(&buf[i]) - 1;
+			else
+			{
+				temp = atoi(&buf[i]);
+				*col = temp - 1;
+			}
+			a++;
+			i += nbr_length(temp) - 1;
+		}
+		i++;
+	}
+}
+
+int		putchar_tc(int tc)
+{
+	write(1, &tc, 1);
+	return (0);
+}
+
+void	move_cursor_left(int *col, int *row, char *cm)
+{
+	if (*col == 0)
+		return ;
+	--(*col);
+	tputs(tgoto(cm, *col, *row), 1, putchar_tc);
+
+}
+
+void	move_cursor_right(int *col, int *row, char *cm)
+{
+	++(*col);
+	tputs(tgoto(cm, *col, *row), 1, putchar_tc);
+
+}
+
+void	delete_end(int *col, int *row, char *cm, char *ce)
+{
+	if (*col != 0)
+		--(*col);
+	tputs(tgoto(cm, *col, *row), 1, putchar_tc);
+	tputs(ce, 1, putchar_tc);
+}
+
+int		main(void)
+{
+	/* change term settings */
+	struct termios term;
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~ICANON;
+	term.c_lflag &= ~ECHO;
+	term.c_cc[VMIN] = 1;
+	term.c_cc[VTIME] = 0;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+
+	/* init termcap */
+	tgetent(NULL, "xterm");
+	char *cm = tgetstr("cm", NULL);
+	char *ce = tgetstr("ce", NULL);
+	
+	int c = 0;
+	int row;
+	int col;
+
+	while (read(0, &c, sizeof(c)) > 0)
+	{
+		get_cursor_position(&col, &row);
+		if (c == LEFT_ARROW)
+			move_cursor_left(&col, &row, cm);
+		else if (c == RIGHT_ARROW)
+			move_cursor_right(&col, &row, cm);
+		else if (c == BACKSPACE)
+			delete_end(&col, &row, cm, ce);
+		else
+		{
+			col++;
+			write(0, &c, 1);
+		}
+		c = 0;
+	}
+}
+
 ```
 
 #### * tgetflag `int  tgetflag (char  * i)`
