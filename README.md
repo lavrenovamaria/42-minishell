@@ -575,5 +575,5 @@ int	main(void)
 ![Screenshot from 2022-01-18 18-44-21](https://user-images.githubusercontent.com/84707645/149969934-8705080e-07c3-4e4f-b74d-8f17f5f40363.png)
 
 #### * signal `typedef void (*sighandler_t)(int)`
-`sighandler_t signal(int signum, sighandler_t handler)`
+`sighandler_t signal(int signum, sighandler_t handler)` \
 [Какая-то боль](https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D0%B3%D0%BD%D0%B0%D0%BB_(Unix))
