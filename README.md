@@ -555,3 +555,22 @@ int	main(void)
 	return (0);
 }
 ```
+
+#### * getenv`char *getenv(const char *name)`
+Возвращает строку для значения переменной среды, соответствующей name. Если значение, соответствующее переменной среды, не найдено или возникла проблема с выполнением функции, возвращается NULL. Следует иметь в виду, что значения, на которые ссылается getenv, не должны освобождаться, потому что они внутренне распределены как статические типы.
+```
+#include <stdio.h>
+
+int	main(void)
+{
+	char	*term;
+
+	term = getenv("TERM");
+	if (!term)
+		return (1);
+	printf("Term Type is %s\n", term);
+	return (0);
+}
+```
+![Screenshot from 2022-01-18 18-44-21](https://user-images.githubusercontent.com/84707645/149969934-8705080e-07c3-4e4f-b74d-8f17f5f40363.png)
+
