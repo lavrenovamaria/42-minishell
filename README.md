@@ -146,7 +146,7 @@ int main(void)
 	}
 }
 ```
-Если запустить, то увидим код клавиш(1, 2, 3, 4, 5, ctrl + D)
+Если запустить, то увидим код клавиш(1, 2, 3, 4, 5, ctrl + D)\
 ![Screenshot from 2022-01-18 13-33-22](https://user-images.githubusercontent.com/84707645/149921222-05ab9242-0234-40b8-b4be-faa72999bfc3.png)
 
 ### * tcgetattr `int tcgetattr(int fd, struct termios *t)`\
