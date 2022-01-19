@@ -624,6 +624,8 @@ int	main(void)
 Возвращает указатель типа (DIR * ), ссылающийся на поток каталога с именем, соответствующим name. Если нет каталога, соответствующего имени, или есть проблема в выполнении функции, возвращаемое значение указателя типа DIR * равно NULL.
 [Для работы с директориями](https://codeforwin.org/2018/03/c-program-to-list-all-files-in-a-directory-recursively.html) необходимо определить переменную типа DIR (по смыслу она похожа на тип FILE). То есть структура DIR в основном используется как средство для манипулирования каталогами.
 DIR*, тип указателя структуры, называемой DIR, часто называют потоком каталогов, и он используется в формате, аналогичном FILE*, файловому потоку для обычных операций с файлами. Поток в потоке каталогов и файловый поток относятся к потоку данных абстрактного промежуточного носителя для облегчения выполнения конкретной задачи. Чтобы понять это, нам нужно понять происхождение потока.
+Тип DIR , определенный в заголовке <dirent.h> , представляет поток каталога, который представляет собой упорядоченную последовательность всех записей каталога в определенном каталоге. Записи каталога представляют файлы; файлы могут быть удалены из каталога или добавлены в каталог асинхронно с операцией readdir().
+Для типа указателя структуры dirent, полученной через функцию readdir, место в памяти, на которое ссылается указатель, выделяется статически, поэтому нет необходимости вызывать функцию free отдельно.
 
 [Файлы устройств размещаются в каталоге](http://gentoo.theserverside.ru/book/secrets_of_dev.html) /dev или в его подкаталогах.
 
@@ -671,3 +673,58 @@ void listFiles(const char *path)
 }
 ```
 ![Screenshot from 2022-01-19 14-29-12](https://user-images.githubusercontent.com/84707645/150121842-c315298c-8d41-4f96-84d3-ecef1404803e.png)
+
+```
+#include <dirent.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <stdio.h>
+
+void	classify(struct dirent *ent)
+{
+	printf("%s\t", ent->d_name);
+	if (ent->d_type == DT_BLK)
+		printf("Block Device\n");
+	else if (ent->d_type == DT_CHR)
+		printf("Character Device\n");
+	else if (ent->d_type == DT_DIR)
+		printf("Directory\n");
+	else if (ent->d_type == DT_LNK)
+		printf("Symbolic Link\n");
+	else if (ent->d_type == DT_REG)
+		printf("Regular File\n");
+	else if (ent->d_type == DT_SOCK)
+		printf("Unix Domain Socket\n");
+	else
+		printf("Unknown Type File\n");
+}
+
+int		main(void)
+{
+	int				temp;
+	DIR				*dirp;
+	struct dirent	*file;
+
+	dirp = opendir("test_dir");
+	if (!dirp)
+	{
+		printf("error\n");
+		return (1);
+	}
+	while (true)
+	{
+		temp = errno;
+		file = readdir(dirp);
+		if (!file && temp != errno)
+		{
+			printf("error\n");
+			break ;
+		}
+		if (!file)
+			break ;
+		classify(file);
+	}
+	closedir(dirp);
+	return (0);
+}
+```
