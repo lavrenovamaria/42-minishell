@@ -660,12 +660,12 @@ int main()
 void listFiles(const char *path)
 {
     struct dirent *dp;
-    DIR *dir = opendir(path);
+    DIR *dir = opendir(path); //DIR * в качестве имени каталога, из которого нужно прочитать список
 
     // Если не получается открыть поток
     if (!dir) 
         return; 
-    while ((dp = readdir(dir)) != NULL)
+    while ((dp = readdir(dir)) != NULL) //Читает имена файлов или каталогов одно за другим по порядку с начала каталога
         printf("%s\n", dp->d_name);
 
     // Закрываем поток
