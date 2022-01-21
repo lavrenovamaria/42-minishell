@@ -728,6 +728,7 @@ int		main(void)
 	return (0);
 }
 ```
+## dup & dup2
 command > file  : перезапишите стандартный вывод в файл или создайте новый файл, если он не существует. dup2(fd, 1)\
 command < file  : передать данные файла на стандартный ввод команды. dup2(fd, 0) \
 command >> file : добавьте стандартный вывод в файл после символа новой строки или создайте новый файл, если он не существует.\
@@ -772,4 +773,32 @@ int main()
 <img width="408" alt="Screen Shot 2022-01-21 at 2 58 37 PM" src="https://user-images.githubusercontent.com/84707645/150524072-82cd71c0-6f3e-4ef8-b53c-bb88835ab2a5.png">
 
 fd1 и fd2 имеют разные номера: 3 и 4 соответственно, но в результате того, что мы writом записали в тот же файл(файл password) строку, то мы сделали копию. Получается, что когда мы закроем fd1, то fd2 будет ещё жить. Значит fd открыл ещё один fd, после вызова dup. fd1 и fd2 — совершенно разные файловые дескрипторы, которые указывают на один и тот же файл.
+
+Тогда посмотрим на dup2, dup2 можно рассматривать как более продвинутый системный вызов, допустим. Функции dup и dup2 используются совершенно по-разному. \
+Разница между dup и dup2 заключается в том, что dup назначает наименьший доступный номер файлового дескриптора, а dup2 позволяет вам выбрать номер файлового дескриптора, который будет назначен.
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <string.h>
+
+int main()
+{
+    int fd = open("./password" ,O_CREAT | O_WRONLY, 0755);
+	dup2(fd, 1);
+
+	char buffer[20] = "welcome!\n";
+   	printf( "%s" ,buffer);
+	fflush(stdout);
+	write(1, buffer, strlen(buffer));
+	write(fd, buffer, strlen(buffer));
+	close(fd);
+    return 0;
+}
+
+```
+<img width="404" alt="Screen Shot 2022-01-21 at 3 22 55 PM" src="https://user-images.githubusercontent.com/84707645/150526439-7b92bb78-2ac0-474a-86ea-b37c765f3f92.png">
 
