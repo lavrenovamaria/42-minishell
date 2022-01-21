@@ -857,7 +857,7 @@ int main(int argc, char *argv[])
 	return wpid == pid && WIFEXITED(status) ? WEXITSTATUS(status) : -1;
 }
 ```
-Вы можете выполнить команду в родительском процессе, не создавая дочерний процесс.
+[Вы можете выполнить команду в родительском процессе, не создавая дочерний процесс].(https://architectophile.tistory.com/9)
 Но если вы думаете, что пишете код, который может обрабатывать как одну команду, так и несколько команд в пайплайне, в этом случае всегда следите за тем, чтобы разные дочерние процессы выполняли разные команды. В этом примере входные данные dprintf() напрямую выводятся в файловый дескриптор с помощью функции, чтобы показать случай, когда данные передаются от родительского процесса к дочернему процессу. с помощью пайпа.
 
 1. Сначала создается один массив для хранения двух файловых дескрипторов родительского процесса.
@@ -873,13 +873,11 @@ int main(int argc, char *argv[])
 <img width="736" alt="2" src="https://user-images.githubusercontent.com/84707645/150566194-cb9e13f7-5f90-4eae-87cc-388a38de6350.png">
 <img width="736" alt="3" src="https://user-images.githubusercontent.com/84707645/150566209-bfea3887-6c95-4470-a263-48328d2b62f8.png">
 <img width="736" alt="4" src="https://user-images.githubusercontent.com/84707645/150566230-4673c80e-55d2-4f7e-b3bd-b5c8ee713b0a.png">
-
-![5](https://user-images.githubusercontent.com/84707645/150566237-b506c22c-ae2a-44e0-8c93-830796f01aee.png)
-![6](https://user-images.githubusercontent.com/84707645/150566243-596d0928-0aa7-453b-887f-043ad0ea9e86.png)
-![7](https://user-images.githubusercontent.com/84707645/150566259-00e8679d-b5ab-463b-a525-9680499250ea.png)
-![8](https://user-images.githubusercontent.com/84707645/150566267-b0f89784-1e57-4bf0-87eb-9e1506c823ef.png)
-![9](https://user-images.githubusercontent.com/84707645/150566281-754d251a-e4ee-4999-bdd4-228ae946dea2.png)
-![10](https://user-images.githubusercontent.com/84707645/150566291-014d688d-e24a-4b5b-91eb-8e48480044fc.png)
-
+<img width="736" alt="5" src="https://user-images.githubusercontent.com/84707645/150566237-b506c22c-ae2a-44e0-8c93-830796f01aee.png">
+<img width="736" alt="6" src="https://user-images.githubusercontent.com/84707645/150566243-596d0928-0aa7-453b-887f-043ad0ea9e86.png">
+<img width="736" alt="7" src="https://user-images.githubusercontent.com/84707645/150566259-00e8679d-b5ab-463b-a525-9680499250ea.png">
+<img width="736" alt="8" src="https://user-images.githubusercontent.com/84707645/150566267-b0f89784-1e57-4bf0-87eb-9e1506c823ef.png">
+<img width="736" alt="9" src="https://user-images.githubusercontent.com/84707645/150566281-754d251a-e4ee-4999-bdd4-228ae946dea2.png">
+<img width="736" alt="10" src="https://user-images.githubusercontent.com/84707645/150566291-014d688d-e24a-4b5b-91eb-8e48480044fc.png">
 
 
