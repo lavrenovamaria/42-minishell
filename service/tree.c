@@ -19,38 +19,70 @@ t_tree	*create_node(void *content)
 	tree->content = content;
 	tree->left = NULL;
 	tree->right = NULL;
+	tree->head = NULL;
 	tree->height = 1;
 
 	return (tree);
 }
 
-t_tree	*rotateright(t_tree *root)
+void	rotateright(t_tree **root)
 {
-	t_tree *temp = root->left;
-	temp->right = root;
-	root = temp;
+	t_tree *temp = root[0]->left;
+	temp->right = root[0];
+	temp->head = root[0]->head;
+	root[0]->left = NULL;
+	root[0]->head = temp;
+	root[0] = temp;
 }
 
-void	rotateleft(t_tree *root)
+void	rotateleft(t_tree **root)
 {
-	t_tree *temp = root->right;
-	temp->left = root;
-	root = temp;
+	t_tree *temp = root[0]->right;
+	temp->left = root[0];
+	temp->head = root[0]->head;
+	root[0]->right = NULL;
+	root[0]->head = temp;
+	root[0] = temp;
 }
 
-void	insert_right(t_tree* root, t_tree *node)
+void	insert_right(t_tree** root, t_tree *node)
 {
-	if (root)
-		root->right = node;
+	if (root[0])
+	{
+		root[0]->right = node;
+		root[0]->right->head = root[0];
+	}
 	else
-		root = node;
+		root[0] = node;
 }
 
-void	insert_left(t_tree* root, t_tree *node)
+void	insert_left(t_tree** root, t_tree *node)
 {
-	if (root)
-		root->left = node;
+	if (root[0])
+	{
+		root[0]->left = node;
+		root[0]->right->head = root[0];
+	}
 	else
-		root = node;
+		root[0] = node;
+}
+
+void	insert_up(t_tree** root, t_tree *node)
+{
+	t_tree *temp;
+	t_tree *head;
+
+	if (root[0])
+	{
+		temp = root[0];
+		head = root[0]->head;
+		head->right = node;
+		node->head = head;
+		node->left = temp;
+		temp->head = node;
+		root[0] = node;
+	}
+	else
+		root[0] = node;
 }
 

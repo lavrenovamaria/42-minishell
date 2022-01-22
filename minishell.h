@@ -31,15 +31,17 @@ typedef struct			s_tree
 	void			*content;
 	struct s_tree	*right;
 	struct s_tree	*left;
+	struct s_tree	*head;
 	int				height;
 }						t_tree;
 
 t_tree	*create_node(void *content);
 void	free_tree(t_tree *root);
-t_tree	*rotateright(t_tree *root);
-t_tree	*rotateleft(t_tree *root);
-void	insert_right(t_tree* root, t_tree *node);
-void	insert_left(t_tree* root, t_tree *node);
+void	rotateright(t_tree **root);
+void	rotateleft(t_tree **root);
+void	insert_right(t_tree** root, t_tree *node);
+void	insert_left(t_tree** root, t_tree *node);
+void	insert_up(t_tree** root, t_tree *node);
 
 // Service
 t_list	*ft_lstindex(t_list *lst, int index);
