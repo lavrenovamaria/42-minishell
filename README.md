@@ -880,4 +880,8 @@ int main(int argc, char *argv[])
 <img width="636" alt="9" src="https://user-images.githubusercontent.com/84707645/150566281-754d251a-e4ee-4999-bdd4-228ae946dea2.png">
 <img width="636" alt="10" src="https://user-images.githubusercontent.com/84707645/150566291-014d688d-e24a-4b5b-91eb-8e48480044fc.png">
 
-
+##  Приоритет выполнения в дереве
+```
+echo a && echo b
+```
+Для каждого из операторов && правая команда выполняется, только если левая команда возвращает 0 (true).
