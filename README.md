@@ -825,6 +825,7 @@ int main()
 ## PIPES
 <details>
   <summary>Жми для просмотра пайповой дичи </summary>
+
 Пайпы дают возможность передавать данные от одного процесса к другому(однонаправленный поток данных). Это позволяет нескольким командам работать вместе для достижения одной цели. Каждая команда пайплайна выполняется в независимом процессе и каждая инструкция выполняется в независимом пространстве памяти. Способ взаимодействия каждого процесса друг с другом предоставляет системный вызов pipe(). Каждый пайп имеет 2 обращенных к пользователю дескриптора файла, соответствующих концу пайпа для чтения и концу пайпа для записи пайпа. \
 pfd[0]: читающий конец канала
 pfd[1]: записывающий конец канала
@@ -832,7 +833,45 @@ pfd[1]: записывающий конец канала
 Программа читает со стандартного ввода и записывает на стандартный вывод.
 pfd[0] — конец чтения (конец ввода), pfd[1] — конец записи (конец вывода)
 Что за магия, Карл:
-Например у нас есть команды a и b, в консоли это будет выглядеть как `a | b`
+НАЧИНАЕМ С САМОГО РОДИТЕЛЯ-ШЕЛЛА
+1. Сам шелл это родитель, т.е. просто команда в консоли `ls` будет уже выполняться в дочернем процессе. У нас в примере 2 команды a и b
+```
+a | b
+```
+![frame-01](https://user-images.githubusercontent.com/84707645/153202547-574bd816-3cff-4af6-8be3-2f89a77d9ecd.gif)
+u - пространство пользователя
+k - kernel
+2. Шелл вызывает функцию pipe()
+![frame-02](https://user-images.githubusercontent.com/84707645/153202930-9961e2c1-3b65-4c0a-8599-ed1ed94b63cf.gif)
+3. Шелл форкает дочку а
+![frame-03](https://user-images.githubusercontent.com/84707645/153202988-aaf575c5-0a7c-4e8e-9c96-08daba94bc13.gif)
+ПРОДОЛЖАЕМ РАБОТАТЬ В ДОЧКЕ a
+4. Закрыли pfd[0](читающий конец пайпа)
+![frame-04](https://user-images.githubusercontent.com/84707645/153203115-442abb28-4b18-4e4f-8bcc-b9716aad56a9.gif)
+5. Соединили pfd[1] с STDOUT_FILENO используя функцию [dup2](https://www.opennet.ru/man.shtml?topic=dup2&category=2&russian=0)
+![frame-05](https://user-images.githubusercontent.com/84707645/153203462-f86c5fd5-f289-4117-aed2-f1bb91ef907b.gif)
+6. Закрыли pfd[1](просто так принято)
+![frame-06](https://user-images.githubusercontent.com/84707645/153203529-0286b0f9-fabb-4d33-abfb-6a7d1c8cdfbb.gif)
+7.Запустили функцию execvp()
+![frame-07](https://user-images.githubusercontent.com/84707645/153203694-986788cd-da50-49ea-9b55-5856db8dd36e.gif)
+ВОЗВРАЩАЕМСЯ К РОДИТЕЛЮ-ШЕЛЛУ
+8. Шелл зыкрывает pfd[1]
+![frame-08](https://user-images.githubusercontent.com/84707645/153203744-55665cf4-9c42-46c1-8513-221c473d0d54.gif)
+9. Шелл форкает дочку b
+![frame-09](https://user-images.githubusercontent.com/84707645/153204162-d2f15152-983d-4d05-91d1-e0b3a25ec788.gif)
+РАБОТАЕМ В ДОЧКЕ b
+10. Соединяем pfd[0] с STDIN_FILENO используя dup2();
+![frame-10](https://user-images.githubusercontent.com/84707645/153204260-b7264611-3357-4a53-9c19-0d6ce7ffc486.gif)
+11. Закрываем pfd[1]
+![frame-11](https://user-images.githubusercontent.com/84707645/153204359-6ad09b2a-ba3a-434f-854e-6a02606652fb.gif)
+12. Выполяняем функцию execvp()
+![frame-12](https://user-images.githubusercontent.com/84707645/153204727-98c2c717-302e-44fa-ac51-6511c1ac3755.gif)
+13. Шелл закрывает pfd[0]
+![frame-13](https://user-images.githubusercontent.com/84707645/153204804-874899f4-4ab6-4311-ab13-1efd20bf1de7.gif)
+14. Вуаля!
+![frame-14](https://user-images.githubusercontent.com/84707645/153205122-3f5b3825-5da8-4c3e-bde0-bbc71111c325.gif)
+
+
 </details>
 
 ##  Приоритет выполнения в дереве
