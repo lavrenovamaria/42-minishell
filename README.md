@@ -499,6 +499,10 @@ int	main(void)
 
 </details>
 
+# isatty, ttyname, ttyslot
+<details>
+  <summary> Описание функций </summary>
+
 #### * isatty `int  isatty (int fd) `
 Сообщает, [подключен ли](https://www.ibm.com/docs/en/zos/2.2.0?topic=functions-isatty-test-if-descriptor-represents-terminal) дескриптор файла к терминалу или нет. Параметр является индексом в таблице дескрипторов файлов стандартной библиотеки ввода-вывода. Индексы 0, 1 и 2 зарезервированы для stdin , stdout и stderr . Все остальные индексы относятся к дескрипторам файлов, которые могут/были открыты вами.
 ```
@@ -627,6 +631,7 @@ int	main(void)
 	return (0);
 }
 ```
+</details>
 
 #### * signal `typedef void (*sighandler_t)(int)`
 `sighandler_t signal(int signum, sighandler_t handler)` \
