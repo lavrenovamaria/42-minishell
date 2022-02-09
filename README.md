@@ -1,6 +1,6 @@
 # 42-minishell
 Minishell will introduce you to the world of shells, which provide a convenient text interface to interact with your system. Shells might seem very easy to understand but have very specific and defined behaviour in almost every single case, most of which will need to be handled properly.
-# Описание доступных функций
+## Описание доступных функций
 <details>
   <summary>Жми для подробностей, пау </summary>
 
@@ -55,6 +55,9 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 | **tputs**| output string returned by `tgetstr`| `int tputs(const char *str, int affcnt, int (*putc)(int))`   | `#include <curses.h>` `#include <term.h>` |
 
 </details>
+	
+<details>
+  <summary>Немного о сигналах </summary>
 
 ## ctrl+c
 * `INT` signal (SIGINT).
@@ -106,6 +109,7 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 * Unix signal: 17.
 * A signal (ctrl+z) that waits to resume execution after stopping execution.
 
+</details>
 
 ## READLINE
 readline — это библиотека GNU для чтения пользовательского ввода. Он поддерживает все виды возможностей редактирования строки, которые пользователь может использовать для редактирования строки ввода. Например, пользователь может перемещать курсор в разные позиции в строке и изменять части входной строки.\
