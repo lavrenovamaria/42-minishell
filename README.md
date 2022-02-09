@@ -838,7 +838,9 @@ pfd[0] — конец чтения (конец ввода), pfd[1] — коне�
 ```
 a | b
 ```
-![frame-01](https://user-images.githubusercontent.com/84707645/153202547-574bd816-3cff-4af6-8be3-2f89a77d9ecd.gif)
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153202547-574bd816-3cff-4af6-8be3-2f89a77d9ecd.gif" width="572" height="930" /> 
+</p>
 u - пространство пользователя
 k - kernel
 2. Шелл вызывает функцию pipe()
