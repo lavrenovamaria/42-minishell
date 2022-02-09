@@ -3,6 +3,7 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 ## all_functions
 <details>
   <summary>Click to expand </summary>
+
 | External functs.    | Description | Form | Header |
 | --- | ----------------------- | ---------- | ---------- |
 | **readline**| Prints a prompt, receives a single line of text input from the user, and returns it without line breaks. If prompt is NULL or the empty string, no prompt is issued.  The line returned is allocated with malloc(); | `char *readline (char *prompt)`   | `#include <readline/readline.h>`  |
