@@ -1,6 +1,6 @@
 # 42-minishell
 Minishell will introduce you to the world of shells, which provide a convenient text interface to interact with your system. Shells might seem very easy to understand but have very specific and defined behaviour in almost every single case, most of which will need to be handled properly.
-# Описание доступных функций проекта
+## Описание доступных функций проекта
 <details>
   <summary>Жми для просмотра таблицы с описанием функций </summary>
 
@@ -56,7 +56,7 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 
 </details>
 
-# Сигналы	
+## Сигналы	
 <details>
   <summary>Немного о сигналах(SIGINT, SIGQUIT, SIGKILL) </summary>
 
@@ -112,7 +112,7 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 
 </details>
 
-# READLINE
+## READLINE
 <details>
   <summary>Жми для инфы о билиотеке readline </summary>
 
@@ -373,7 +373,7 @@ Tgetflag вoзвpaщaeт 1 в cлyчae, ecли yкaзaннaя xapaктepиcти�
 
 </details>
 
-# ioctl, wait2, wait4
+## ioctl, wait2, wait4
 <details>
   <summary> Описание функций </summary>
 
@@ -418,7 +418,7 @@ int	main(void)
 
 </details>
 
-# getcwd, chdir, getenv, opendir
+## getcwd, chdir, getenv, opendir
 <details>
   <summary> Описание функций </summary>
 
