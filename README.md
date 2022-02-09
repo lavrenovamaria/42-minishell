@@ -52,7 +52,7 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 | **tgoto**| Instantiates the parameter to the specified function. The return value is tputspassed to the function.| `char *tgoto(const char *cap, int col, int row)`   | `#include <curses.h>` `#include <term.h>` |
 | **tputs**| output string returned by `tgetstr`| `int tputs(const char *str, int affcnt, int (*putc)(int))`   | `#include <curses.h>` `#include <term.h>` |
 
-## Сигналы	
+## Сигналы
 <details>
   <summary>Немного о сигналах(SIGINT, SIGQUIT, SIGKILL) </summary>
 
@@ -825,7 +825,7 @@ int main()
 ## pipes
 <details>
   <summary>Жми для просмотра пайповой дичи </summary>
-\
+
 Пайпы дают возможность передавать данные от одного процесса к другому(однонаправленный поток данных). Это позволяет нескольким командам работать вместе для достижения одной цели. Каждая команда пайплайна выполняется в независимом процессе и каждая инструкция выполняется в независимом пространстве памяти. Способ взаимодействия каждого процесса друг с другом предоставляет системный вызов pipe(). Каждый пайп имеет 2 обращенных к пользователю дескриптора файла, соответствующих концу пайпа для чтения и концу пайпа для записи пайпа. \
 pfd[0]: читающий конец канала
 pfd[1]: записывающий конец канала
@@ -840,82 +840,82 @@ pfd[0] — конец чтения (конец ввода), pfd[1] — коне�
 a | b
 ```
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153202547-574bd816-3cff-4af6-8be3-2f89a77d9ecd.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153202547-574bd816-3cff-4af6-8be3-2f89a77d9ecd.gif" width="550" height="420" />
 </p>
 
 2. Шелл вызывает функцию pipe()
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153202930-9961e2c1-3b65-4c0a-8599-ed1ed94b63cf.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153202930-9961e2c1-3b65-4c0a-8599-ed1ed94b63cf.gif" width="550" height="420" />
 </p>
 
 3. Шелл форкает дочку а
 
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153202988-aaf575c5-0a7c-4e8e-9c96-08daba94bc13.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153202988-aaf575c5-0a7c-4e8e-9c96-08daba94bc13.gif" width="550" height="420" />
 </p>
 ПРОДОЛЖАЕМ РАБОТАТЬ В ДОЧКЕ a
 
 4. Закрыли pfd[0](читающий конец пайпа)
 
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153203115-442abb28-4b18-4e4f-8bcc-b9716aad56a9.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153203115-442abb28-4b18-4e4f-8bcc-b9716aad56a9.gif" width="550" height="420" />
 </p>
-5. Соединили pfd[1] с STDOUT_FILENO используя функцию [dup2](https://www.opennet.ru/man.shtml?topic=dup2&category=2&russian=0)
+5. Соединили pfd[1] с STDOUT_FILENO используя функцию dup2
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153203462-f86c5fd5-f289-4117-aed2-f1bb91ef907b.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153203462-f86c5fd5-f289-4117-aed2-f1bb91ef907b.gif" width="550" height="420" />
 </p>
 6. Закрыли pfd[1](просто так принято)
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153203529-0286b0f9-fabb-4d33-abfb-6a7d1c8cdfbb.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153203529-0286b0f9-fabb-4d33-abfb-6a7d1c8cdfbb.gif" width="550" height="420" />
 </p>
 7.Запустили функцию execvp()
 
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153203694-986788cd-da50-49ea-9b55-5856db8dd36e.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153203694-986788cd-da50-49ea-9b55-5856db8dd36e.gif" width="550" height="420" />
 </p>
 
 ВОЗВРАЩАЕМСЯ К РОДИТЕЛЮ-ШЕЛЛУ
 8. Шелл зыкрывает pfd[1]
-	
+
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153203744-55665cf4-9c42-46c1-8513-221c473d0d54.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153203744-55665cf4-9c42-46c1-8513-221c473d0d54.gif" width="550" height="420" />
 </p>
 
 9. Шелл форкает дочку b
-	
+
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153204162-d2f15152-983d-4d05-91d1-e0b3a25ec788.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153204162-d2f15152-983d-4d05-91d1-e0b3a25ec788.gif" width="550" height="420" />
 </p>
 
 РАБОТАЕМ В ДОЧКЕ b
 
 10. Соединяем pfd[0] с STDIN_FILENO используя dup2();
-	
+
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153204260-b7264611-3357-4a53-9c19-0d6ce7ffc486.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153204260-b7264611-3357-4a53-9c19-0d6ce7ffc486.gif" width="550" height="420" />
 </p>
 
 11. Закрываем pfd[1]
-	
+
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153204359-6ad09b2a-ba3a-434f-854e-6a02606652fb.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153204359-6ad09b2a-ba3a-434f-854e-6a02606652fb.gif" width="550" height="420" />
 </p>
 
 12. Выполяняем функцию execvp()
-	
+
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153204727-98c2c717-302e-44fa-ac51-6511c1ac3755.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153204727-98c2c717-302e-44fa-ac51-6511c1ac3755.gif" width="550" height="420" />
 </p>
 
 13. Шелл закрывает pfd[0]
 
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153204804-874899f4-4ab6-4311-ab13-1efd20bf1de7.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153204804-874899f4-4ab6-4311-ab13-1efd20bf1de7.gif" width="550" height="420" />
 </p>
 
 14. Вуаля!
 <p align="left">
-	<img  src="https://user-images.githubusercontent.com/84707645/153205122-3f5b3825-5da8-4c3e-bde0-bbc71111c325.gif" width="550" height="420" /> 
+	<img  src="https://user-images.githubusercontent.com/84707645/153205122-3f5b3825-5da8-4c3e-bde0-bbc71111c325.gif" width="550" height="420" />
 </p>
 
 </details>
@@ -936,7 +936,7 @@ echo a || echo b
 true || echo aaa && echo bbb
 ```
 Выводом будет только `bbb`
-Эти два оператора имеют наивысший приоритет в списке и они равны между собой по приоритету, такие дела. При отсутствии группирующий структур в первую очередь выполняются крайние левые операции, потому что операторы с одинаковым приоритетом являются левоассоциативными. Из примера самая левая операция (||) выполняется первой. 
+Эти два оператора имеют наивысший приоритет в списке и они равны между собой по приоритету, такие дела. При отсутствии группирующий структур в первую очередь выполняются крайние левые операции, потому что операторы с одинаковым приоритетом являются левоассоциативными. Из примера самая левая операция (||) выполняется первой.
 Т.е. сначала идёт оценка. `true || echo aaa` и, очевидно, true есть true, т.е. мы идём дальше без оценки `echo aaa`, потом выполняем только часть `echo bbb`
 Тут всё. Идём дальше:
 ```
@@ -968,8 +968,8 @@ a || b && c && d || e || f && g
 		   [||]        [&&][e]     [f]
 		  /    \        /  \
 		 /      \      /    \
-	       [a] 	[b] [c]     [d]	
-			 
+	       [a] 	[b] [c]     [d]
+
 ```
 Оператор с наивысшим приоритетом после И и ИЛИ — это ПАЙП.
 РЕДИРЕКТЫ после ПАЙПА. Три разных редиректа могут не соблюдать какой-либо порядок приоритета между ними, мы можем решить, равны они или различны, это не имеет значения. Их можно выполнять в любом порядке.
