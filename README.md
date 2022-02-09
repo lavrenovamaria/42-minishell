@@ -841,18 +841,21 @@ a | b
 <p align="left">
 	<img  src="https://user-images.githubusercontent.com/84707645/153202547-574bd816-3cff-4af6-8be3-2f89a77d9ecd.gif" width="550" height="420" /> 
 </p>
-u - пространство пользователя \
-k - kernel \
+u - пространство пользователя\
+k - kernel\
 2. Шелл вызывает функцию pipe()
 <p align="left">
 	<img  src="https://user-images.githubusercontent.com/84707645/153202930-9961e2c1-3b65-4c0a-8599-ed1ed94b63cf.gif" width="550" height="420" /> 
 </p>
 3. Шелл форкает дочку а
+
 <p align="left">
 	<img  src="https://user-images.githubusercontent.com/84707645/153202988-aaf575c5-0a7c-4e8e-9c96-08daba94bc13.gif" width="550" height="420" /> 
 </p>
 ПРОДОЛЖАЕМ РАБОТАТЬ В ДОЧКЕ a
+
 4. Закрыли pfd[0](читающий конец пайпа)
+
 <p align="left">
 	<img  src="https://user-images.githubusercontent.com/84707645/153203115-442abb28-4b18-4e4f-8bcc-b9716aad56a9.gif" width="550" height="420" /> 
 </p>
@@ -865,24 +868,54 @@ k - kernel \
 	<img  src="https://user-images.githubusercontent.com/84707645/153203529-0286b0f9-fabb-4d33-abfb-6a7d1c8cdfbb.gif" width="550" height="420" /> 
 </p>
 7.Запустили функцию execvp()
-![frame-07](https://user-images.githubusercontent.com/84707645/153203694-986788cd-da50-49ea-9b55-5856db8dd36e.gif)
+
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153203694-986788cd-da50-49ea-9b55-5856db8dd36e.gif" width="550" height="420" /> 
+</p>
+
 ВОЗВРАЩАЕМСЯ К РОДИТЕЛЮ-ШЕЛЛУ
 8. Шелл зыкрывает pfd[1]
-![frame-08](https://user-images.githubusercontent.com/84707645/153203744-55665cf4-9c42-46c1-8513-221c473d0d54.gif)
-9. Шелл форкает дочку b
-![frame-09](https://user-images.githubusercontent.com/84707645/153204162-d2f15152-983d-4d05-91d1-e0b3a25ec788.gif)
-РАБОТАЕМ В ДОЧКЕ b
-10. Соединяем pfd[0] с STDIN_FILENO используя dup2();
-![frame-10](https://user-images.githubusercontent.com/84707645/153204260-b7264611-3357-4a53-9c19-0d6ce7ffc486.gif)
-11. Закрываем pfd[1]
-![frame-11](https://user-images.githubusercontent.com/84707645/153204359-6ad09b2a-ba3a-434f-854e-6a02606652fb.gif)
-12. Выполяняем функцию execvp()
-![frame-12](https://user-images.githubusercontent.com/84707645/153204727-98c2c717-302e-44fa-ac51-6511c1ac3755.gif)
-13. Шелл закрывает pfd[0]
-![frame-13](https://user-images.githubusercontent.com/84707645/153204804-874899f4-4ab6-4311-ab13-1efd20bf1de7.gif)
-14. Вуаля!
-![frame-14](https://user-images.githubusercontent.com/84707645/153205122-3f5b3825-5da8-4c3e-bde0-bbc71111c325.gif)
+	
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153203744-55665cf4-9c42-46c1-8513-221c473d0d54.gif" width="550" height="420" /> 
+</p>
 
+9. Шелл форкает дочку b
+	
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153204162-d2f15152-983d-4d05-91d1-e0b3a25ec788.gif" width="550" height="420" /> 
+</p>
+
+РАБОТАЕМ В ДОЧКЕ b
+
+10. Соединяем pfd[0] с STDIN_FILENO используя dup2();
+	
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153204260-b7264611-3357-4a53-9c19-0d6ce7ffc486.gif" width="550" height="420" /> 
+</p>
+
+11. Закрываем pfd[1]
+	
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153204359-6ad09b2a-ba3a-434f-854e-6a02606652fb.gif" width="550" height="420" /> 
+</p>
+
+12. Выполяняем функцию execvp()
+	
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153204727-98c2c717-302e-44fa-ac51-6511c1ac3755.gif" width="550" height="420" /> 
+</p>
+
+13. Шелл закрывает pfd[0]
+
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153204804-874899f4-4ab6-4311-ab13-1efd20bf1de7.gif" width="550" height="420" /> 
+</p>
+
+14. Вуаля!
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153205122-3f5b3825-5da8-4c3e-bde0-bbc71111c325.gif" width="550" height="420" /> 
+</p>
 
 </details>
 
