@@ -1,8 +1,6 @@
 # 42-minishell
 Minishell will introduce you to the world of shells, which provide a convenient text interface to interact with your system. Shells might seem very easy to understand but have very specific and defined behaviour in almost every single case, most of which will need to be handled properly.
 ## Описание доступных функций проекта
-<details>
-  <summary>Жми для просмотра таблицы с описанием функций </summary>
 
 | External functs.    | Description | Form | Header |
 | --- | ----------------------- | ---------- | ---------- |
@@ -53,8 +51,6 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 | **tgetstr**| String information on whether is present in the terminal entry `id` .| `char *tgetstr(char *id, char **area)`   | `#include <curses.h>` `#include <term.h>` |
 | **tgoto**| Instantiates the parameter to the specified function. The return value is tputspassed to the function.| `char *tgoto(const char *cap, int col, int row)`   | `#include <curses.h>` `#include <term.h>` |
 | **tputs**| output string returned by `tgetstr`| `int tputs(const char *str, int affcnt, int (*putc)(int))`   | `#include <curses.h>` `#include <term.h>` |
-
-</details>
 
 ## Сигналы	
 <details>
