@@ -2,7 +2,7 @@
 Minishell will introduce you to the world of shells, which provide a convenient text interface to interact with your system. Shells might seem very easy to understand but have very specific and defined behaviour in almost every single case, most of which will need to be handled properly.
 ## Описание доступных функций
 <details>
-  <summary>Жми для подробностей, пау </summary>
+  <summary>Жми для просмотра таблицы с описанием функций </summary>
 
 | External functs.    | Description | Form | Header |
 | --- | ----------------------- | ---------- | ---------- |
