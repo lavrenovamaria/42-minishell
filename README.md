@@ -112,7 +112,7 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 
 </details>
 
-## READLINE
+## READLINE - библиотека для чтения пользовательского ввода
 <details>
   <summary>Жми для инфы о билиотеке readline </summary>
 
@@ -151,7 +151,7 @@ add_history — это функция, которая позволяет вам 
 В случае использования встроенного каталога readline в серии Unix возвращаемое значение имеет тип int. Если в выполнении функции нет проблем, возвращается 0, иначе возвращается -1.
 </details>
 
-## Cursor control using termcap library(описание характеристик терминалов)
+## TERMCAP - библиотека для чтения пользовательского ввода
 <details>
   <summary> Описание характеристик терминалов с примерами и кусками кода. Либо readline либо эта штука </summary>
 
