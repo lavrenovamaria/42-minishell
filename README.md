@@ -418,7 +418,7 @@ int	main(void)
 
 </details>
 
-# getcwd, chdir, getenv
+# getcwd, chdir, getenv, opendir
 <details>
   <summary> Описание функций </summary>
 
@@ -496,6 +496,115 @@ int	main(void)
 }
 ```
 ![Screenshot from 2022-01-18 18-44-21](https://user-images.githubusercontent.com/84707645/149969934-8705080e-07c3-4e4f-b74d-8f17f5f40363.png)
+
+#### * opendir `DIR *opendir(const char *name)`
+Возвращает указатель типа (DIR * ), ссылающийся на поток каталога с именем, соответствующим name. Если нет каталога, соответствующего имени, или есть проблема в выполнении функции, возвращаемое значение указателя типа DIR * равно NULL.
+[Для работы с директориями](https://codeforwin.org/2018/03/c-program-to-list-all-files-in-a-directory-recursively.html) необходимо определить переменную типа DIR (по смыслу она похожа на тип FILE). То есть структура DIR в основном используется как средство для манипулирования каталогами.
+DIR*, тип указателя структуры, называемой DIR, часто называют потоком каталогов, и он используется в формате, аналогичном FILE*, файловому потоку для обычных операций с файлами. Поток в потоке каталогов и файловый поток относятся к потоку данных абстрактного промежуточного носителя для облегчения выполнения конкретной задачи. Чтобы понять это, нам нужно понять происхождение потока.
+Тип DIR , определенный в заголовке <dirent.h> , представляет поток каталога, который представляет собой упорядоченную последовательность всех записей каталога в определенном каталоге. Записи каталога представляют файлы; файлы могут быть удалены из каталога или добавлены в каталог асинхронно с операцией readdir().
+Для типа указателя структуры dirent, полученной через функцию readdir, место в памяти, на которое ссылается указатель, выделяется статически, поэтому нет необходимости вызывать функцию free отдельно.
+
+[Файлы устройств размещаются в каталоге](http://gentoo.theserverside.ru/book/secrets_of_dev.html) /dev или в его подкаталогах.
+
+Узнать информацию о файле устройства можно с помощью команд file и ls.
+
+/dev (от англ. devices — устройства) — каталог в системах типа UNIX, содержащий так называемые специальные файлы — интерфейсы работы с драйверами ядра. Как правило (хотя и не всегда), /dev является обычным каталогом в корневой файловой системе, куда можно (но не нужно) помещать и обычные файлы. Доступ на запись к /dev (то есть право добавлять и перемещать специальные файлы) имеет только суперпользователь. Сами «специальные файлы» могут быть как доступны простому пользователю (терминал, псевдоустройства), так и недоступны (жёсткие диски).
+```
+#include <stdio.h>
+#include <sys/types.h>
+#include <dirent.h>
+
+
+void listFiles(const char *path);
+
+int main()
+{
+    // Путь до директории
+    char path[100];
+
+    // Путь, который прописал нам пользователь
+    printf("Enter path to list files: ");
+    scanf("%s", path);
+
+    listFiles(path);
+
+    return 0;
+}
+
+
+// Список всех файлов в заданной директории
+
+void listFiles(const char *path)
+{
+    struct dirent *dp;
+    DIR *dir = opendir(path); //DIR * в качестве имени каталога, из которого нужно прочитать список
+
+    // Если не получается открыть поток
+    if (!dir)
+        return;
+    while ((dp = readdir(dir)) != NULL) //Читает имена файлов или каталогов одно за другим по порядку с начала каталога
+        printf("%s\n", dp->d_name);
+
+    // Закрываем поток
+    closedir(dir);
+}
+```
+![Screenshot from 2022-01-19 14-29-12](https://user-images.githubusercontent.com/84707645/150121842-c315298c-8d41-4f96-84d3-ecef1404803e.png)
+
+```
+#include <dirent.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <stdio.h>
+
+void	classify(struct dirent *ent)
+{
+	printf("%s\t", ent->d_name);
+	if (ent->d_type == DT_BLK)
+		printf("Block Device\n");
+	else if (ent->d_type == DT_CHR)
+		printf("Character Device\n");
+	else if (ent->d_type == DT_DIR)
+		printf("Directory\n");
+	else if (ent->d_type == DT_LNK)
+		printf("Symbolic Link\n");
+	else if (ent->d_type == DT_REG)
+		printf("Regular File\n");
+	else if (ent->d_type == DT_SOCK)
+		printf("Unix Domain Socket\n");
+	else
+		printf("Unknown Type File\n");
+}
+
+int		main(void)
+{
+	int				temp;
+	DIR				*dirp;
+	struct dirent	*file;
+
+	dirp = opendir("test_dir");
+	if (!dirp)
+	{
+		printf("error\n");
+		return (1);
+	}
+	while (true)
+	{
+		temp = errno;
+		file = readdir(dirp);
+		if (!file && temp != errno)
+		{
+			printf("error\n");
+			break ;
+		}
+		if (!file)
+			break ;
+		classify(file);
+	}
+	closedir(dirp);
+	return (0);
+}
+```
 
 </details>
 
@@ -633,137 +742,6 @@ int	main(void)
 ```
 </details>
 
-#### * signal `typedef void (*sighandler_t)(int)`
-`sighandler_t signal(int signum, sighandler_t handler)` \
-[Какая-то боль](https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D0%B3%D0%BD%D0%B0%D0%BB_(Unix))
-```
-#include <stdbool.h>
-#include <unistd.h>
-
-void	handler(int signum)
-{
-	(void)signum;
-	write(STDOUT_FILENO, "write From Signal\n", 18);
-}
-
-int	main(void)
-{
-	signal(SIGINT, handler);
-	while(true)
-		;
-	return (0 ) ;
-}
-```
-![Screenshot from 2022-01-18 18-52-33](https://user-images.githubusercontent.com/84707645/149971462-50e8cde1-257d-44a8-80f1-a29bd0c3aff7.png)
-
-#### * opendir `DIR *opendir(const char *name)`
-Возвращает указатель типа (DIR * ), ссылающийся на поток каталога с именем, соответствующим name. Если нет каталога, соответствующего имени, или есть проблема в выполнении функции, возвращаемое значение указателя типа DIR * равно NULL.
-[Для работы с директориями](https://codeforwin.org/2018/03/c-program-to-list-all-files-in-a-directory-recursively.html) необходимо определить переменную типа DIR (по смыслу она похожа на тип FILE). То есть структура DIR в основном используется как средство для манипулирования каталогами.
-DIR*, тип указателя структуры, называемой DIR, часто называют потоком каталогов, и он используется в формате, аналогичном FILE*, файловому потоку для обычных операций с файлами. Поток в потоке каталогов и файловый поток относятся к потоку данных абстрактного промежуточного носителя для облегчения выполнения конкретной задачи. Чтобы понять это, нам нужно понять происхождение потока.
-Тип DIR , определенный в заголовке <dirent.h> , представляет поток каталога, который представляет собой упорядоченную последовательность всех записей каталога в определенном каталоге. Записи каталога представляют файлы; файлы могут быть удалены из каталога или добавлены в каталог асинхронно с операцией readdir().
-Для типа указателя структуры dirent, полученной через функцию readdir, место в памяти, на которое ссылается указатель, выделяется статически, поэтому нет необходимости вызывать функцию free отдельно.
-
-[Файлы устройств размещаются в каталоге](http://gentoo.theserverside.ru/book/secrets_of_dev.html) /dev или в его подкаталогах.
-
-Узнать информацию о файле устройства можно с помощью команд file и ls.
-
-/dev (от англ. devices — устройства) — каталог в системах типа UNIX, содержащий так называемые специальные файлы — интерфейсы работы с драйверами ядра. Как правило (хотя и не всегда), /dev является обычным каталогом в корневой файловой системе, куда можно (но не нужно) помещать и обычные файлы. Доступ на запись к /dev (то есть право добавлять и перемещать специальные файлы) имеет только суперпользователь. Сами «специальные файлы» могут быть как доступны простому пользователю (терминал, псевдоустройства), так и недоступны (жёсткие диски).
-```
-#include <stdio.h>
-#include <sys/types.h>
-#include <dirent.h>
-
-
-void listFiles(const char *path);
-
-int main()
-{
-    // Путь до директории
-    char path[100];
-
-    // Путь, который прописал нам пользователь
-    printf("Enter path to list files: ");
-    scanf("%s", path);
-
-    listFiles(path);
-
-    return 0;
-}
-
-
-// Список всех файлов в заданной директории
-
-void listFiles(const char *path)
-{
-    struct dirent *dp;
-    DIR *dir = opendir(path); //DIR * в качестве имени каталога, из которого нужно прочитать список
-
-    // Если не получается открыть поток
-    if (!dir)
-        return;
-    while ((dp = readdir(dir)) != NULL) //Читает имена файлов или каталогов одно за другим по порядку с начала каталога
-        printf("%s\n", dp->d_name);
-
-    // Закрываем поток
-    closedir(dir);
-}
-```
-![Screenshot from 2022-01-19 14-29-12](https://user-images.githubusercontent.com/84707645/150121842-c315298c-8d41-4f96-84d3-ecef1404803e.png)
-
-```
-#include <dirent.h>
-#include <errno.h>
-#include <stdbool.h>
-#include <stdio.h>
-
-void	classify(struct dirent *ent)
-{
-	printf("%s\t", ent->d_name);
-	if (ent->d_type == DT_BLK)
-		printf("Block Device\n");
-	else if (ent->d_type == DT_CHR)
-		printf("Character Device\n");
-	else if (ent->d_type == DT_DIR)
-		printf("Directory\n");
-	else if (ent->d_type == DT_LNK)
-		printf("Symbolic Link\n");
-	else if (ent->d_type == DT_REG)
-		printf("Regular File\n");
-	else if (ent->d_type == DT_SOCK)
-		printf("Unix Domain Socket\n");
-	else
-		printf("Unknown Type File\n");
-}
-
-int		main(void)
-{
-	int				temp;
-	DIR				*dirp;
-	struct dirent	*file;
-
-	dirp = opendir("test_dir");
-	if (!dirp)
-	{
-		printf("error\n");
-		return (1);
-	}
-	while (true)
-	{
-		temp = errno;
-		file = readdir(dirp);
-		if (!file && temp != errno)
-		{
-			printf("error\n");
-			break ;
-		}
-		if (!file)
-			break ;
-		classify(file);
-	}
-	closedir(dirp);
-	return (0);
-}
-```
 ## dup & dup2
 command > file  : перезапишите стандартный вывод в файл или создайте новый файл, если он не существует. dup2(fd, 1)\
 command < file  : передать данные файла на стандартный ввод команды. dup2(fd, 0) \
