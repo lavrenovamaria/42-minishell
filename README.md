@@ -1,8 +1,8 @@
 # 42-minishell
 Minishell will introduce you to the world of shells, which provide a convenient text interface to interact with your system. Shells might seem very easy to understand but have very specific and defined behaviour in almost every single case, most of which will need to be handled properly.
-# External functs
+# Описание доступных функций
 <details>
-  <summary>Click to expand </summary>
+  <summary>Жми для подробностей, пау </summary>
 
 | External functs.    | Description | Form | Header |
 | --- | ----------------------- | ---------- | ---------- |
