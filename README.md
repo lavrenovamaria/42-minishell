@@ -54,6 +54,7 @@ Minishell will introduce you to the world of shells, which provide a convenient 
 | **tgoto**| Instantiates the parameter to the specified function. The return value is tputspassed to the function.| `char *tgoto(const char *cap, int col, int row)`   | `#include <curses.h>` `#include <term.h>` |
 | **tputs**| output string returned by `tgetstr`| `int tputs(const char *str, int affcnt, int (*putc)(int))`   | `#include <curses.h>` `#include <term.h>` |
 
+</details>
 
 ## ctrl+c
 * `INT` signal (SIGINT).
