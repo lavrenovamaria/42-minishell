@@ -841,19 +841,29 @@ a | b
 <p align="left">
 	<img  src="https://user-images.githubusercontent.com/84707645/153202547-574bd816-3cff-4af6-8be3-2f89a77d9ecd.gif" width="550" height="420" /> 
 </p>
-u - пространство пользователя
-k - kernel
+u - пространство пользователя \
+k - kernel \
 2. Шелл вызывает функцию pipe()
-![frame-02](https://user-images.githubusercontent.com/84707645/153202930-9961e2c1-3b65-4c0a-8599-ed1ed94b63cf.gif)
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153202930-9961e2c1-3b65-4c0a-8599-ed1ed94b63cf.gif" width="550" height="420" /> 
+</p>
 3. Шелл форкает дочку а
-![frame-03](https://user-images.githubusercontent.com/84707645/153202988-aaf575c5-0a7c-4e8e-9c96-08daba94bc13.gif)
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153202988-aaf575c5-0a7c-4e8e-9c96-08daba94bc13.gif" width="550" height="420" /> 
+</p>
 ПРОДОЛЖАЕМ РАБОТАТЬ В ДОЧКЕ a
 4. Закрыли pfd[0](читающий конец пайпа)
-![frame-04](https://user-images.githubusercontent.com/84707645/153203115-442abb28-4b18-4e4f-8bcc-b9716aad56a9.gif)
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153203115-442abb28-4b18-4e4f-8bcc-b9716aad56a9.gif" width="550" height="420" /> 
+</p>
 5. Соединили pfd[1] с STDOUT_FILENO используя функцию [dup2](https://www.opennet.ru/man.shtml?topic=dup2&category=2&russian=0)
-![frame-05](https://user-images.githubusercontent.com/84707645/153203462-f86c5fd5-f289-4117-aed2-f1bb91ef907b.gif)
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153203462-f86c5fd5-f289-4117-aed2-f1bb91ef907b.gif" width="550" height="420" /> 
+</p>
 6. Закрыли pfd[1](просто так принято)
-![frame-06](https://user-images.githubusercontent.com/84707645/153203529-0286b0f9-fabb-4d33-abfb-6a7d1c8cdfbb.gif)
+<p align="left">
+	<img  src="https://user-images.githubusercontent.com/84707645/153203529-0286b0f9-fabb-4d33-abfb-6a7d1c8cdfbb.gif" width="550" height="420" /> 
+</p>
 7.Запустили функцию execvp()
 ![frame-07](https://user-images.githubusercontent.com/84707645/153203694-986788cd-da50-49ea-9b55-5856db8dd36e.gif)
 ВОЗВРАЩАЕМСЯ К РОДИТЕЛЮ-ШЕЛЛУ
