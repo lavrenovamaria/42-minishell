@@ -608,7 +608,7 @@ int		main(void)
 
 </details>
 
-# isatty, ttyname, ttyslot
+## isatty, ttyname, ttyslot
 <details>
   <summary> Описание функций </summary>
 
@@ -826,7 +826,7 @@ int main()
 Ладно, не очень понятно, что произошло.
 </details>
 
-## PIPES
+## pipes
 <details>
   <summary>Жми для просмотра пайповой дичи </summary>
 
